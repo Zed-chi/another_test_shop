@@ -1,3 +1,24 @@
+import argparse
+
+
+def get_args():
+    parser = argparse.ArgumentParser(
+        description="Программа выводит последовательность цифр,\
+            при этом количество каждой цифры равно ее значению.\
+            При аргументе 3 результат будет => 122333."
+    )
+    parser.add_argument(
+        "-n",
+        dest="number",
+        type=int,
+        default=1,
+        help="Введите последнюю цифру последовательности от 1.. \
+            которую хотите вывести на экран.\
+            По-умолчанию 1",
+    )
+    return parser.parse_args()
+
+
 def get_num_sequence(end_num: int) -> str:
     """Returns string of nums starting from 1 to end_num
     each number will be multiplied by its value
