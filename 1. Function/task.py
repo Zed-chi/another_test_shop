@@ -29,3 +29,13 @@ def get_num_sequence(end_num: int) -> str:
         return ""
     result = map(lambda cur_num: str(cur_num) * cur_num, range(1, end_num + 1))
     return "".join(result)
+
+
+def main():
+    args = get_args()
+    seq = get_num_sequence(args.number)
+    print(seq)
+
+
+if __name__ == "__main__":
+    main()
