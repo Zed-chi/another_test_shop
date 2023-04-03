@@ -19,13 +19,18 @@ class CategoryListWidget(Widget):
             return [int(x) for x in value.split(" ") if x.strip()]
 
     def js_value(self, ids):
-        items = [{"id": _id, "title": "qwe"} for _id in ids]
-        return json.dumps(items)
+        if ids:
+            chosen_items = Category.objects.filter(id__in=ids)
+            print(chosen_items)
+            items = [
+                {"id": item.id, "title": item.title} for item in chosen_items
+            ]
+            return json.dumps(items)
 
     def get_context(self, name, value, attrs):
         formatted_value = self.format_value(value)
         js_value = self.js_value(formatted_value)
-        last_id = formatted_value[-1]
+        last_id = formatted_value[-1] if formatted_value else None
         return {
             "widget": {
                 "name": name,
