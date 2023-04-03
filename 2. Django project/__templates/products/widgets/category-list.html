@@ -1,0 +1,217 @@
+<!-- Пространство классов 'c-list' -->
+<div class="c-list-widget">
+    <div class="c-list-container">
+        <input name="{{ widget.name }}" hidden />
+        <fieldset>
+            <legend>
+                Категории
+            </legend>
+            <div class="chosen-categories"></div>
+            <div class="decr-chosen">
+                Убрать <span>&#10556;</span>
+            </div>
+        </fieldset>
+        <div class="load-category-btn">
+            Добавить категорию <span>&#10507;</span>
+        </div>
+        <div class="viewlist"></div>
+    </div>
+</div>
+<!-- style-->
+<style>
+    .c-list-container{
+        max-width: 500px;
+        min-width: 100px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.815);
+        padding:20px;
+        margin:20px auto;
+        box-shadow: 0 0 0px 1px rgb(177, 177, 177);
+    }
+    .c-list-container .load-category-btn{    
+        padding: 5px;
+        font-size: 12px;
+        color :white;
+        background: rgb(71, 165, 71);
+        border-radius: 10px;
+        text-align: center;
+        margin-top:10px;
+    }
+    .c-list-container .load-category-btn:active{    
+        transform: scale(0.99);
+    }
+    .c-list-container .load-category-btn:hover{    
+        cursor: pointer;
+    }
+    .c-list-container .decr-chosen{        
+        padding: 5px;
+        font-size: 12px;
+        color :white;
+        background: rgb(240, 64, 94);
+        border-radius: 10px;
+        text-align: center;
+    }
+    .c-list-container .decr-chosen:active{    
+        transform: scale(0.99);
+    }
+    .c-list-container .decr-chosen:hover{    
+        cursor: pointer;
+    }
+    
+    
+    .c-list-container .viewlist{
+        visibility: hidden;
+        border-radius: 10px;
+        border:1px dashed gray;
+        min-height: 10px;
+        padding: 10px;
+    }
+    
+    
+    .c-list-container .category-item{
+        font-size: 16px;
+        border-radius: 10px;
+        border: 1px solid gray;
+        margin: 2px 0;
+        text-align: center;
+        cursor: pointer;
+        user-select: none;
+        padding: 5px;
+    }
+    .c-list-container .category-item:hover{
+        background: rgb(72, 119, 221);
+        color: wheat;
+    }
+    
+    .c-list-container .view-item{
+        width:100%;
+        border-radius: 10px;
+        border: 1px solid gray;
+        margin: 2px 0;
+        text-align: center;
+        cursor: pointer;
+        user-select: none;    
+    }
+    .c-list-container .view-item:hover{
+        background: rgb(72, 119, 221);
+        color: wheat;
+    }
+    .c-list-container .view-item:active{
+        transform: scale(1.05);
+    }
+    
+</style>
+<!-- script -->
+<script>
+    window.onload = function () {
+        var state = {
+            "categories": [
+                { "id": 1, "parent": null, 'title': "qwe1" },
+                { "id": 2, "parent": 1, 'title': "qwe2" },
+                { "id": 3, "parent": 1, 'title': "qwe3" },
+                { "id": 4, "parent": 2, 'title': "qwe4" },
+                { "id": 5, "parent": 3, 'title': "qwe5" },
+                { "id": 6, "parent": 3, 'title': "qwe6" },
+                { "id": 7, "parent": null, 'title': "qwe7" },
+                { "id": 8, "parent": null, 'title': "qwe8" },
+                { "id": 9, "parent": null, 'title': "qwe9" },
+                { "id": 10, "parent": 7, 'title': "qwe10" },
+                { "id": 11, "parent": 8, 'title': "qwe22" },
+                { "id": 12, "parent": 7, 'title': "qwe12" },
+            ],
+            "curId": null,
+            "chosenIds": {% if widget.value %}{{widget.js_value|safe}}{% else %} []{% endif %}
+
+        }
+        var input = document.querySelector(".c-list-container input");
+        var btn = document.querySelector(".c-list-container .load-category-btn");
+        var decrBtn = document.querySelector(".c-list-container .decr-chosen");
+        var viewList = document.querySelector(".c-list-container .viewlist");
+        var chosenList = document.querySelector(".c-list-container .chosen-categories");
+        
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            console.log(`id=>${state.curId}`);
+            var list = state["categories"].filter(
+                category => category["parent"] == state["curId"]
+            );
+            console.log(list);
+            viewList.style.visibility = "visible";
+            if (list.length == 0) {
+                viewList.innerHTML = "Пусто"
+            } else {
+                viewList.innerHTML = "";
+                list.forEach(
+                    (item) => {
+                        var elem = makeViewElem(item);
+                        viewList.appendChild(elem);
+                    }
+                );
+            }
+        });
+    
+        decrBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            console.log(state.chosenIds);
+            state["chosenIds"].pop(-1);
+            if (state["chosenIds"].length == 0) {
+                var id = null;
+            } else {
+                var lastItem = state["chosenIds"][state["chosenIds"].length - 1];
+                var id = lastItem["id"];
+            }
+            state["curId"] = id;
+            refreshChoseList();
+        });
+        function init(){
+            if (state["chosenIds"]){                
+                var lastItem = state["chosenIds"][state["chosenIds"].length - 1];
+                state["curId"] = lastItem["id"];                
+            }            
+            refreshChoseList();
+        }
+        function makeViewElem(item) {
+            var div = document.createElement("div");
+            div.className = "view-item";
+            div.setAttribute("data-id", item['id']);
+            div.setAttribute("data-title", item['title']);
+            div.innerText = item['title'];
+            div.addEventListener("click", function (e) {
+                var id = Number(e.target.getAttribute("data-id"));
+                state["chosenIds"].push(
+                    { "id": item["id"], "title": item["title"] }
+                );
+                state["curId"] = id;
+                var elem = makeCategoryElem(item);
+                
+                viewList.style.visibility = "hidden";
+                viewList.innerHTML = "";
+                refreshInputValue();
+                refreshChoseList();
+            });
+            return div;
+        }
+        function makeCategoryElem(item) {
+            var div = document.createElement("div");        
+            div.className = "category-item";        
+            div.innerHTML = item['title']+"&#8595;";        
+            return div;
+        }
+    
+        function refreshChoseList() {
+            chosenList.innerHTML = "";
+            state["chosenIds"].forEach(
+                (item) => {
+                    var elem = makeCategoryElem(item);
+                    chosenList.appendChild(elem);
+                }
+            );        
+        };
+        function refreshInputValue() {        
+            var str_ids = state["chosenIds"].map(i=>String(i.id));
+            input.value = str_ids.join(" ");
+            console.log(input.value);
+        };
+        init();
+    }
+</script>
