@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.forms",
     "main",
     "products",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
