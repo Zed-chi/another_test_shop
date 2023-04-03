@@ -18,4 +18,16 @@ class Category(models.Model):
 
 class Product(models.Model):
     title = models.CharField(max_length=255)
-    category = models.ForeignKey(to, on_delete)
+    category_path = models.TextField()
+
+    def get_categories(self):
+        return [int(x) for x in self.category_path.split(" ")]
+
+
+class CategoryProductRel(models.Model):
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, related_name="items"
+    )
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="items"
+    )
