@@ -4,3 +4,4 @@ djoser
 djangorestframework
 django-configurations
 django-registration
+pillow
