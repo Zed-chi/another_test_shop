@@ -8,7 +8,9 @@ class ProductAdmin(admin.ModelAdmin):
     form = ProductForm
 
     def save_model(self, request, obj, form, change):
-        category_relations = CategoryProductRel.filter(product_id=obj.id)
+        category_relations = CategoryProductRel.objects.filter(
+            product_id=obj.id
+        )
         relations_ids = [i.category.id for i in category_relations]
         posted_ids = [int(i) for i in obj.category_path.split(" ")]
         for rel in category_relations:
@@ -22,3 +24,7 @@ class ProductAdmin(admin.ModelAdmin):
                 )
 
         super().save_model(request, obj, form, change)
+
+
+admin.site.register(Category)
+admin.site.register(CategoryProductRel)
