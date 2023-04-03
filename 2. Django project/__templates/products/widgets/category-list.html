@@ -1,7 +1,9 @@
 <!-- Пространство классов 'c-list' -->
 <div class="c-list-widget">
     <div class="c-list-container">
-        <input name="{{ widget.name }}" hidden />
+        <input name="{{ widget.name }}"
+               value='{% if widget.value %}{{ widget.value }}{% endif %}'
+               hidden/>
         <fieldset>
             <legend>
                 Категории
@@ -36,6 +38,7 @@
         border-radius: 10px;
         text-align: center;
         margin-top:10px;
+        visibility: hidden;
     }
     .c-list-container .load-category-btn:active{    
         transform: scale(0.99);
@@ -105,33 +108,19 @@
 <script>
     window.onload = function () {
         var state = {
-            "categories": [
-                { "id": 1, "parent": null, 'title': "qwe1" },
-                { "id": 2, "parent": 1, 'title': "qwe2" },
-                { "id": 3, "parent": 1, 'title': "qwe3" },
-                { "id": 4, "parent": 2, 'title': "qwe4" },
-                { "id": 5, "parent": 3, 'title': "qwe5" },
-                { "id": 6, "parent": 3, 'title': "qwe6" },
-                { "id": 7, "parent": null, 'title': "qwe7" },
-                { "id": 8, "parent": null, 'title': "qwe8" },
-                { "id": 9, "parent": null, 'title': "qwe9" },
-                { "id": 10, "parent": 7, 'title': "qwe10" },
-                { "id": 11, "parent": 8, 'title': "qwe22" },
-                { "id": 12, "parent": 7, 'title': "qwe12" },
-            ],
+            "categories": [],
             "curId": null,
-            "chosenIds": {% if widget.value %}{{widget.js_value|safe}}{% else %} []{% endif %}
-
+            "chosenIds": {% if widget.value %}{{widget.js_value|safe}}{% else %} []{% endif %},
+            "url":"{{widget.catUrl}}",
         }
         var input = document.querySelector(".c-list-container input");
         var btn = document.querySelector(".c-list-container .load-category-btn");
         var decrBtn = document.querySelector(".c-list-container .decr-chosen");
         var viewList = document.querySelector(".c-list-container .viewlist");
         var chosenList = document.querySelector(".c-list-container .chosen-categories");
-        
+
         btn.addEventListener("click", function (e) {
-            e.preventDefault();
-            console.log(`id=>${state.curId}`);
+            e.preventDefault();            
             var list = state["categories"].filter(
                 category => category["parent"] == state["curId"]
             );
@@ -162,14 +151,23 @@
             }
             state["curId"] = id;
             refreshChoseList();
+            refreshInputValue()
         });
         function init(){
-            if (state["chosenIds"]){                
+            if (state["chosenIds"].length > 0){                
                 var lastItem = state["chosenIds"][state["chosenIds"].length - 1];
                 state["curId"] = lastItem["id"];                
-            }            
+            } 
+            fetch(state.url)
+            .then(res=>res.json())
+            .then((data)=>{
+                state["categories"] = data;
+                btn.style.visibility = "visible";
+            })
+            .catch(e=>console.log(e));
             refreshChoseList();
         }
+        
         function makeViewElem(item) {
             var div = document.createElement("div");
             div.className = "view-item";
@@ -209,7 +207,7 @@
         };
         function refreshInputValue() {        
             var str_ids = state["chosenIds"].map(i=>String(i.id));
-            input.value = str_ids.join(" ");
+            input.setAttribute("value",str_ids.join(" "));
             console.log(input.value);
         };
         init();
