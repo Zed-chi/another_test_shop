@@ -1,0 +1,6 @@
+django==4
+environs
+djoser
+djangorestframework
+django-configurations
+django-registration
