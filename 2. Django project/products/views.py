@@ -4,11 +4,15 @@ from .models import Category, Product, CategoryProductRel
 
 
 class ProductListView(ListView):
-    pass
+    queryset = Product.objects.all()
+    template_name = "products/list.html"
+    context_object_name = "products"
 
 
 class ProductDetailView(DetailView):
-    pass
+    queryset = Product.objects.all()
+    template_name = "products/detail.html"
+    context_object_name = "product"
 
 
 class CategoryListView(ListView):
