@@ -16,8 +16,6 @@ class Category(models.Model):
     )
     image = models.ImageField(
         upload_to="category",
-        width_field=200,
-        height_field=200,
         null=True,
         blank=True,
         verbose_name="Изображение",
@@ -38,6 +36,23 @@ class Product(models.Model):
     )
     category_path = models.TextField(verbose_name="Входит в категории")
     slug = models.SlugField(unique=True)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    available = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    splash_image = models.ImageField(
+        upload_to="products", blank=True, null=True
+    )
+    preview_image = models.ImageField(
+        upload_to="products",
+        blank=True,
+        null=True,
+    )
+    thumb_image = models.ImageField(
+        upload_to="products",
+        blank=True,
+        null=True,
+    )
 
     def __str__(self):
         return f"#{self.id} - {self.title}"
