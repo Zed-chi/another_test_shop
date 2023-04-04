@@ -12,6 +12,7 @@ class Category(models.Model):
         null=True,
         blank=True,
         verbose_name="Надкатегория",
+        related_name="children",
     )
     image = models.ImageField(
         upload_to="category",
@@ -36,6 +37,7 @@ class Product(models.Model):
         max_length=255, verbose_name="Название", unique=True
     )
     category_path = models.TextField(verbose_name="Входит в категории")
+    slug = models.SlugField(unique=True)
 
     def __str__(self):
         return f"#{self.id} - {self.title}"
