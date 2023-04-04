@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Магазин - Корзина{% endblock %}
+{% block content %}
+    <section class="rounded bg-light p-3 m-1" style="min-height:700px">
+        <div class="row">
+            <div class="col">
+                <h3>Корзина</h3>
+                {{ cart.id }}
+                {{ cart }}
+                {{ request.user }}
+            </div>
+        </div>
+        <div class="row">
+            <ul>
+                {% for i in cart.products.all %}
+                    <li>
+                        <span>{{ i.title }}</span>
+                        <span>{{ i.price }}</span>
+                        <a href="/cart/update?product_id={{ i.id }}">remove</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="row">Total:{{ cart.total }}</div>
+    </section>
+{% endblock %}
