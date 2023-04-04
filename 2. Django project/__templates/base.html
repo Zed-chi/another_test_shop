@@ -10,7 +10,6 @@
         <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="{% static 'js/jquery-3.1.0.js' %}"></script>
         <script src="{% static 'js/jquery-ui.js' %}"></script>
         <script src="{% static 'js/knockout-3.3.0.js' %}"></script>
@@ -49,7 +48,7 @@
                             </li>
                             {% if request.user.is_authenticated %}
                                 <li class="nav-item bg-sucess">
-                                    <a class="nav-link" href="javascript:void(0)">Корзина</a>
+                                    <a class="nav-link" href="{% url 'cart:detail' %}">Корзина</a>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle"
