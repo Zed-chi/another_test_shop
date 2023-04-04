@@ -6,7 +6,7 @@ from django.conf import settings
 
 class CategoryListWidget(Widget):
     """
-    Виджет выбора цепочки категорий
+    Category chain widget
     """
 
     cat_ids_string = ""
@@ -14,11 +14,14 @@ class CategoryListWidget(Widget):
     template_name = "products/widgets/category-list.html"
 
     def format_value(self, value: str):
-        """Разделить"""
+        """Splitting  string to id num array"""
         if value:
             return [int(x) for x in value.split(" ") if x.strip()]
 
     def js_value(self, ids):
+        """
+        Value for inject to js script
+        """
         if ids:
             chosen_items = Category.objects.filter(id__in=ids)
             print(chosen_items)
