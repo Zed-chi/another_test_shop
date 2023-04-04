@@ -47,7 +47,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'categories_list' %}">Каталог</a>
                             </li>
-                            {% if request.user.is_autenticated %}
+                            {% if request.user.is_authenticated %}
                                 <li class="nav-item bg-sucess">
                                     <a class="nav-link" href="javascript:void(0)">Корзина</a>
                                 </li>
@@ -58,13 +58,16 @@
                                        data-bs-toggle="dropdown">Профиль</a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="#">Заказы</a>
+                                            <a class="dropdown-item" href="">Заказы</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Настройки</a>
+                                            <a class="dropdown-item" href="">Настройки</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Выйти</a>
+                                            <a class="dropdown-item" href="/admin">Админка</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="/logout">Выйти</a>
                                         </li>
                                     </ul>
                                 </li>
