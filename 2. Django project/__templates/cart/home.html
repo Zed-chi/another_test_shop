@@ -2,25 +2,56 @@
 {% block title %}Магазин - Корзина{% endblock %}
 {% block content %}
     <section class="rounded bg-light p-3 m-1" style="min-height:700px">
-        <div class="row">
-            <div class="col">
-                <h3>Корзина</h3>
-                {{ cart.id }}
-                {{ cart }}
-                {{ request.user }}
+        <h3>Корзина:</h3>
+        {% if cart.items.count %}
+            <div class="table-responsive-sm">
+                <table class="table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Название</th>
+                            <th>Цена</th>
+                            <th>Количество</th>
+                            <th>Общая сумма позиции</th>
+                            <th>Убрать позицию</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart.items.all %}
+                            <tr>
+                                <td>{{ item.product.title }}</td>
+                                <td>{{ item.price }}</td>
+                                <td>
+                                    <form style="display: inline"
+                                          action="{% url 'cart:dec_product' slug=item.product.slug %}">
+                                        {% csrf_token %}
+                                        <button type="submit">-</button>
+                                    </form>
+                                    {{ item.quantity }}
+                                    <form style="display: inline"
+                                          action="{% url 'cart:inc_product' slug=item.product.slug %}">
+                                        {% csrf_token %}
+                                        <button type="submit">+</button>
+                                    </form>
+                                </td>
+                                <td>{{ item.total_price }}</td>
+                                <td>
+                                    <form action="{% url 'cart:delete_product' slug=item.product.slug %}">
+                                        {% csrf_token %}
+                                        <button type="submit">x</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-        </div>
-        <div class="row">
-            <ul>
-                {% for i in cart.products.all %}
-                    <li>
-                        <span>{{ i.title }}</span>
-                        <span>{{ i.price }}</span>
-                        <a href="/cart/update?product_id={{ i.id }}">remove</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="row">Total:{{ cart.total }}</div>
+            <h4>Общая сумма корзины: {{ cart.get_total_price }}руб</h4>
+            <form action="{% url 'cart:flush_cart' %}">
+                {% csrf_token %}
+                <button type="submit">Очистить</button>
+            </form>
+        {% else %}
+            <h4>Пусто</h4>
+        {% endif %}
     </section>
 {% endblock %}
