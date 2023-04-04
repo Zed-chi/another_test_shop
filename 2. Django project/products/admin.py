@@ -6,8 +6,16 @@ from .forms import ProductForm
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     form = ProductForm
+    list_display = ["title", "slug", "price", "available", "created_at"]
+    list_filter = ["available", "created_at"]
+    prepopulated_fields = {"slug": ["title"]}
 
     def save_model(self, request, obj, form, change):
+        """Additional step for:
+        - creating relations
+        - updating relations
+        """
+        super().save_model(request, obj, form, change)
         category_relations = CategoryProductRel.objects.filter(
             product_id=obj.id
         )
@@ -23,8 +31,11 @@ class ProductAdmin(admin.ModelAdmin):
                     product=obj, category=category
                 )
 
-        super().save_model(request, obj, form, change)
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ["title", "slug"]
+    prepopulated_fields = {"slug": ["title"]}
 
 
-admin.site.register(Category)
 admin.site.register(CategoryProductRel)
