@@ -20,7 +20,7 @@
                     <li class="list-group-item">{{ product.price }}</li>
                     <li class="list-group-item">
                         {% if request.user.is_authenticated %}
-                            <form action="{% url 'cart:add_product' p_id=product.id %}" method="post">
+                            <form action="{% url 'cart:add_product' slug=product.slug %}" method="post">
                                 {% csrf_token %}
                                 <button class="btn btn-success">Добавить в корзину</button>
                             </form>
