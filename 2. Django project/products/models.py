@@ -24,6 +24,10 @@ class Category(models.Model):
     def __str__(self):
         return f"#{self.id} - {self.title}"
 
+    @classmethod
+    def get_root_categories(cls):
+        return cls.objects.filter(parent=None)
+
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"

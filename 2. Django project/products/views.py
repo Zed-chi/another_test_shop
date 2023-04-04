@@ -12,7 +12,7 @@ class ProductDetailView(DetailView):
 
 
 class CategoryListView(ListView):
-    queryset = Category.objects.all()
+    queryset = Category.get_root_categories()
     template_name = "products/categories/list.html"
     context_object_name = "categories"
 
