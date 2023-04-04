@@ -9,4 +9,12 @@ class ProductForm(forms.ModelForm):
         widgets = {
             "category_path": CategoryListWidget(),
         }
-        fields = "__all__"
+        fields = [
+            "title",
+            "category_path",
+            "slug",
+            "description",
+            "price",
+            "available",
+            "preview_image",
+        ]

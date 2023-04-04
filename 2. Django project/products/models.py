@@ -44,9 +44,6 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    splash_image = models.ImageField(
-        upload_to="products", blank=True, null=True
-    )
     preview_image = models.ImageField(
         upload_to="products",
         blank=True,
@@ -65,6 +62,20 @@ class Product(models.Model):
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["id"]
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="images"
+    )
+    image = models.ImageField(upload_to="product")
+
+
+class ProductThumb(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="thumb"
+    )
+    image = models.ImageField(upload_to="product")
 
 
 class CategoryProductRel(models.Model):
