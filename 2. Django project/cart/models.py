@@ -32,5 +32,8 @@ class CartItem(models.Model):
     quantity = models.IntegerField(default=1)
     item_price = models.DecimalField(decimal_places=2, max_digits=10)
 
+    class Meta:
+        unique_together = ["cart", "product"]
+
     def total_price(self):
         return self.item_price * self.quantity
