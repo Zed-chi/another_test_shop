@@ -10,9 +10,12 @@
         <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
         <script src="{% static 'js/jquery-3.1.0.js' %}"></script>
         <script src="{% static 'js/jquery-ui.js' %}"></script>
         <script src="{% static 'js/knockout-3.3.0.js' %}"></script>
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="apple-touch-icon"
               sizes="180x180"
               href="{% static 'apple-touch-icon.png' %}">
@@ -46,16 +49,28 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'categories_list' %}">Каталог</a>
                             </li>
+                            <li class="nav-item">
+                                <form class="d-flex">
+                                    <input class="form-control me-2" type="text" placeholder="Название">
+                                    <button class="btn btn-primary" type="button">Поиск</button>
+                                </form>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ">
                             {% if request.user.is_authenticated %}
-                                <li class="nav-item bg-sucess">
-                                    <a class="nav-link" href="{% url 'cart:detail' %}">Корзина</a>
+                                <li class="nav-item">
+                                    <a class="btn btn-success mx-1" href="{% url 'cart:detail' %}">
+                                        <i class="fa fa-shopping-cart"></i> : {{ request.user.cart.items.count }}
+                                    </a>
                                 </li>
-                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown ">
                                     <a class="nav-link dropdown-toggle"
                                        href="#"
                                        role="button"
-                                       data-bs-toggle="dropdown">Профиль</a>
-                                    <ul class="dropdown-menu">
+                                       data-bs-toggle="dropdown">
+                                        <i class="fa fa-user-circle"></i>
+                                    </a>
+                                    <ul class="dropdown-menu  dropdown-menu-end">
                                         <li>
                                             <a class="dropdown-item" href="">Заказы</a>
                                         </li>
@@ -76,10 +91,6 @@
                                 </li>
                             {% endif %}
                         </ul>
-                        <form class="d-flex">
-                            <input class="form-control me-2" type="text" placeholder="Название">
-                            <button class="btn btn-primary" type="button">Поиск</button>
-                        </form>
                     </div>
                 </div>
             </nav>
