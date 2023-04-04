@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
+from .models import Category, Product, CategoryProductRel
 
 
 class ProductListView(ListView):
@@ -11,8 +12,12 @@ class ProductDetailView(DetailView):
 
 
 class CategoryListView(ListView):
-    pass
+    queryset = Category.objects.all()
+    template_name = "products/categories/list.html"
+    context_object_name = "categories"
 
 
 class CategoryDetailView(DetailView):
-    pass
+    queryset = Category.objects.all()
+    template_name = "products/categories/detail.html"
+    context_object_name = "category"
