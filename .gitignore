@@ -5,3 +5,4 @@
 *.pyx
 *.pyc
 .vscode
+2. Django project/__media/category/*
