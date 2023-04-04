@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Магазин - Все продукты{% endblock %}
+{% block content %}
+    <section class="rounded bg-light row p-3 m-1">
+        {% for product in products %}
+            <a href="{% url 'category_detail' slug=product.slug %}"
+               style="display:inline"
+               class="col-sm-12 col-md-4">
+                <div class="card p-0 mt-1">
+                    <div class="card-header">{{ product.title }}</div>
+                    <div class="card-body">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="Картинка">
+                        {% else %}
+                            <img src="/media/blank.png" alt="Картинка" class="w-100">
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </section>
+{% endblock %}
+{% block scripts %}{% endblock %}
