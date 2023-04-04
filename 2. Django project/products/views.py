@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
+from django.core.paginator import Paginator, Page
 from .models import Category, Product, CategoryProductRel
 
 
@@ -25,3 +26,17 @@ class CategoryDetailView(DetailView):
     queryset = Category.objects.all()
     template_name = "products/categories/detail.html"
     context_object_name = "category"
+
+    def get_context_data(self, **kwargs):
+        """Insert the single object into the context dict."""
+        context = super().get_context_data(**kwargs)
+        products = Product.objects.filter(items__category=self.object)
+        paginator = Paginator(products, per_page=10)
+        if "page" in self.request.GET:
+            page_num = self.request.GET["page"]
+        else:
+            page_num = 1
+        page = paginator.get_page(page_num)
+        context["page"] = page
+        context["products"] = page.object_list
+        return context
