@@ -6,7 +6,7 @@ from products.models import Product
 
 class Cart(models.Model):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="cart"
     )
 
     def flush(self):
@@ -17,9 +17,20 @@ class Cart(models.Model):
         except:
             pass
 
+    def get_total_price(self):
+        items = self.items.all()
+        return sum([i.total_price() for i in items])
+
 
 class CartItem(models.Model):
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
+    cart = models.ForeignKey(
+        Cart, on_delete=models.CASCADE, related_name="items"
+    )
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="cart_items"
+    )
+    quantity = models.IntegerField(default=1)
     item_price = models.DecimalField(decimal_places=2, max_digits=10)
+
+    def total_price(self):
+        return self.item_price * self.quantity
