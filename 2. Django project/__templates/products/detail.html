@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}Магазин - Продукт {{ product.title }}{% endblock %}
 {% block content %}
-    <section class="rounded bg-light p-3 m-1">
+    <section class="rounded bg-light p-3 m-1" style="min-height:700px">
         <h2>{{ product.title }}</h2>
         <div class="row">
             <!- image -->
             <div class="col-sm-12 col-md-6">
-                <img src="" alt="">
+                {% if product.preview_image %}
+                    <img src="{{ product.preview_image.url }}" alt="" class="w-100">
+                {% else %}
+                    <img src="/media/blank.png" alt="" class="w-100">
+                {% endif %}
             </div>
             <!- info -->
             <div class="col-sm-12 col-md-6">
@@ -15,9 +19,14 @@
                     <li class="list-group-item">{{ product.available }}</li>
                     <li class="list-group-item">{{ product.price }}</li>
                     <li class="list-group-item">
-                        <form action="{% url 'cart:add_product' p_id=product.id}" method="post">
-                            <button class="bg-success">Добавить в корзину</button>
-                        </form>
+                        {% if request.user.is_authenticated %}
+                            <form action="{% url 'cart:add_product' p_id=product.id %}" method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-success">Добавить в корзину</button>
+                            </form>
+                        {% else %}
+                            <a href="/login" class="btn btn-info">Войти в учетную запись</a>
+                        {% endif %}
                     </li>
                 </ul>
             </div>
