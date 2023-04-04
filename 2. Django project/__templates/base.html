@@ -35,7 +35,7 @@
         <header class="container">
             <nav class="rounded navbar navbar-expand-md navbar-white bg-white">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="javascript:void(0)">Магазин</a>
+                    <a class="navbar-brand" href="/">Магазин</a>
                     <button class="navbar-toggler"
                             type="button"
                             data-bs-toggle="collapse"
@@ -45,7 +45,7 @@
                     <div class="collapse navbar-collapse" id="mynavbar">
                         <ul class="navbar-nav  me-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="javascript:void(0)">Каталог</a>
+                                <a class="nav-link" href="{% url 'categories_list' %}">Каталог</a>
                             </li>
                             {% if request.user.is_autenticated %}
                                 <li class="nav-item bg-sucess">
