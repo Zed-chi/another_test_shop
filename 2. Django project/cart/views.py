@@ -13,15 +13,18 @@ def cart_home(request):
 
 @login_required
 def flush_cart(request):
-    request.user.cart.flush_cart()
-    return redirect("cart:home_page")
+    request.user.cart.flush()
+    return redirect("cart:detail")
 
 
 @login_required
 def add_product(request, slug):
     product = get_object_or_404(Product, slug=slug)
     cart = request.user.cart
-    print(f"=== prod = {product}; cart = {cart}; ===")
+    cart_item = CartItem.objects.filter(product=product, cart=cart)
+    if cart_item:
+        return increase_product_num(request, slug)
+
     cart_item = CartItem.objects.create(
         cart=cart,
         product=product,
@@ -39,7 +42,7 @@ def increase_product_num(request, slug):
     )
     cart_item.quantity += 1
     cart_item.save()
-    return redirect("product_detail", kwargs={"slug": slug})
+    return redirect("cart:detail")
 
 
 @login_required
@@ -51,7 +54,7 @@ def decrease_product_num(request, slug):
         return delete_product(request, slug)
     cart_item.quantity -= 1
     cart_item.save()
-    return redirect("product_detail", kwargs={"slug": slug})
+    return redirect("cart:detail")
 
 
 @login_required
@@ -60,4 +63,4 @@ def delete_product(request, slug):
         CartItem, product__slug=slug, cart=request.user.cart
     )
     cart_item.delete()
-    return redirect("product_detail", kwargs={"slug": slug})
+    return redirect("cart:detail")
