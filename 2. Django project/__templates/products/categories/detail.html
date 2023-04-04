@@ -12,20 +12,42 @@
             {% endfor %}
         </details>
     </section>
-    <section class="rounded bg-light row p-3 m-1">
-        <div class="row">
-            {% for item in category.items.all %}
-                <a href="{% url 'product_detail' slug=item.product.slug %}">
-                    <div class="card col-sm-4 p-0">
-                        <div class="card-header">{{ item.product.title }}</div>
+    <section class="rounded bg-light p-3 m-1">
+        <div class="row " style="min-height: 500px;">
+            {% for product in products %}
+                <a href="{% url 'product_detail' slug=product.slug %}" class="col-sm-4">
+                    <div class="card  p-0">
+                        <div class="card-header">{{ product.title }}</div>
                         <div class="card-body">
-                            <img src="{{ item.product.image.file.url }}" alt="" class="w-100">
+                            {% if product.image %}
+                                <img src="{{ product.image.file.url }}" alt="" class="w-100">
+                            {% else %}
+                                <img src="/media/blank.png" alt="" class="w-100">
+                            {% endif %}
                         </div>
-                        <div class="card-footer">100руб</div>
+                        <div class="card-footer">{{ product.price }}руб</div>
                     </div>
                 </a>
             {% endfor %}
             <div class="col-sm-4"></div>
+        </div>
+        <div class="mt-1">
+            <h5 class="text-center">Страницы</h5>
+            <ul class="pagination justify-content-center">
+                {% if page.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page.previous_page_number }}">Previous</a>
+                    </li>
+                {% endif %}
+                <li class="page-item">
+                    <a class="page-link" href="#">{{ page.number }} из {{ page.paginator.num_pages }}</a>
+                </li>
+                {% if page.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page.next_page_number }}">Next</a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
     </section>
 {% endblock %}
