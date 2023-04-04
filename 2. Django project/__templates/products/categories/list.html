@@ -10,7 +10,7 @@
                     <div class="card-header">{{ cat.title }}</div>
                     <div class="card-body">
                         {% if cat.image %}
-                            <img src="{{ cat.image.file.url }}" alt="Картинка">
+                            <img src="{{ cat.image.url }}" alt="Картинка" class="w-100">
                         {% else %}
                             <img src="/media/blank.png" alt="Картинка" class="w-100">
                         {% endif %}
