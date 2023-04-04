@@ -9,6 +9,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ["title", "slug", "price", "available", "created_at"]
     list_filter = ["available", "created_at"]
     prepopulated_fields = {"slug": ["title"]}
+    list_editable = ["price", "available"]
 
     def save_model(self, request, obj, form, change):
         """Additional step for:
