@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Магазин - Категория {{ category.title }}{% endblock %}
+{% block content %}
+    <section class="rounded bg-light row p-3 m-1">
+        <h2>{{ category.title }}</h2>
+        <details>
+            <summary>
+                Подкатегории:
+            </summary>
+            {% for i in category.children.all %}
+                <a href="{% url 'category_detail' slug=i.slug %}"  class="badge bg-dark">{{ i.title }}</a>
+            {% endfor %}
+        </details>
+    </section>
+    <section class="rounded bg-light row p-3 m-1">
+        <div class="row">
+            {% for item in category.items.all %}
+                <a href="{% url 'product_detail' slug=item.product.slug %}">
+                    <div class="card col-sm-4 p-0">
+                        <div class="card-header">{{ item.product.title }}</div>
+                        <div class="card-body">
+                            <img src="{{ item.product.image.file.url }}" alt="" class="w-100">
+                        </div>
+                        <div class="card-footer">100руб</div>
+                    </div>
+                </a>
+            {% endfor %}
+            <div class="col-sm-4"></div>
+        </div>
+    </section>
+{% endblock %}
+{% block scripts %}{% endblock %}
