@@ -15,9 +15,25 @@
             <!- info -->
             <div class="col-sm-12 col-md-6">
                 <ul class="list-group">
-                    <li class="list-group-item">{{ product.description }}</li>
-                    <li class="list-group-item">{{ product.available }}</li>
-                    <li class="list-group-item">{{ product.price }}</li>
+                    <li class="list-group-item">Описание: {{ product.description }}</li>
+                    <li class="list-group-item">
+                        В наличии:
+                        {% if product.available %}
+                            <i class="fa fa-check"></i>
+                        {% else %}
+                            <i class="fa fa-close"></i>
+                        {% endif %}
+                    </li>
+                    <li class="list-group-item">Цена: {{ product.price }}</li>
+                    <li class="list-group-item">
+                        В категории:
+                        {% for relation in product.items.all %}
+                            <a href="{% url 'category_detail' slug=relation.category.slug %}"
+                               class="badge bg-secondary">
+                                {{ relation.category.title }}
+                            </a>
+                        {% endfor %}
+                    </li>
                     <li class="list-group-item">
                         {% if request.user.is_authenticated %}
                             <form action="{% url 'cart:add_product' slug=product.slug %}" method="post">
