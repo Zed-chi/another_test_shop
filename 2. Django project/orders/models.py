@@ -50,6 +50,7 @@ class Order(models.Model):
         decimal_places=2,
         max_digits=10,
     )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     delivered_at = models.DateTimeField(
         verbose_name="Дата доставки", null=True, blank=True
     )
@@ -68,7 +69,9 @@ class Order(models.Model):
         return str(self.id)
 
     def get_full_price(self):
-        return sum([item.total_price() for item in self.items]) + self.shipping_price
+        items = self.items.all()
+        items_price = sum([item.total_price() for item in items])
+        return items_price + self.shipping_price
 
 
 class OrderItem(models.Model):
