@@ -8,11 +8,11 @@
                class="col-sm-12 col-md-4">
                 <div class="card p-0 mt-1">
                     <div class="card-header">{{ cat.title }}</div>
-                    <div class="card-body">
+                    <div class="card-body text-center">
                         {% if cat.image %}
-                            <img src="{{ cat.image.url }}" alt="Картинка" class="w-100">
+                            <img src="{{ cat.image.url }}" alt="Картинка" height="150">
                         {% else %}
-                            <img src="/media/blank.png" alt="Картинка" class="w-100">
+                            <img src="/media/blank.png" alt="Картинка" height="150">
                         {% endif %}
                     </div>
                 </div>
