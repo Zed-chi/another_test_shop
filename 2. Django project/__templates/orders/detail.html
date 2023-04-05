@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Магазин - Список ваших заказов{% endblock %}
+{% block content %}
+<section class="rounded bg-light  p-3 m-1" style="min-height:500px">
+    <h4>Заказ № {{order.id}}:</h4>
+    <ul class="list-group">
+        <li class="list-group-item">Оплата: {{order.payment}}</li>
+        <li class="list-group-item">Имя: {{order.firstname}}</li>
+        <li class="list-group-item">Фамилия: {{order.lastname}}</li>
+        <li class="list-group-item">Номер телефона: {{order.phonenumber}}</li>
+        <li class="list-group-item">Комментарий: {{order.comment}}</li>
+        <li class="list-group-item">Адрес: {{order.address}} </li>
+        <li class="list-group-item">Статус: {{order.status}}</li>
+        <li class="list-group-item">Сумма заказа: {{order.total_price}}</li>
+        <li class="list-group-item">Сумма доставки: {{order.shipping_price}}</li>
+        <li class="list-group-item">Дата создания: {{order.created_at}}</li>
+        {% if order.delivered_at %}
+        <li class="list-group-item">Дата доставки: {{order.delivered_at}}</li>
+        {% endif %}
+        {% if order.refunded_at %}
+        <li class="list-group-item">Дата возврата: {{order.refunded_at}}</li>
+        {% endif %}
+        {% if order.handled_at %}
+        <li class="list-group-item">Дата обработки: {{order.handled_at}}</li>
+        {% endif %}
+        {% if order.status == "draft" %}
+        <form action="{% url 'orders:card_pay' pk=order.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Оплатить</button>
+        </form>
+        {% endif %}
+    </ul>
+    <h5>Позиции заказа:</h5>
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Количество</th>
+                <th>Цена</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{item.product.title}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.item_price}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}
+{% block scripts %}{% endblock %}
