@@ -28,7 +28,10 @@ class LoginForm(forms.Form):
         label="почта",
         widget=forms.TextInput(attrs={"class": "form-control"}),
     )
-    password = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(
+        label="Password",
+        widget=forms.PasswordInput(attrs={"class": "form-control"}),
+    )
 
     class Meta:
         model = UserProfile
