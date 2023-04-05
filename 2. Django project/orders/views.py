@@ -8,21 +8,24 @@ from django.shortcuts import (
 from django.contrib.auth.decorators import login_required, permission_required
 from .models import Order, OrderItem
 from .forms import OrderShippingForm
+from django.contrib import messages
 
 
 SHIPPING_PRICE = 100
 
 
 @login_required
-def checkout(request):
+def complete(request):
     if request.method == "GET":
-        return redirect("cart:homepage")
+        return redirect("cart:detail")
     if request.user.cart.get_total_price == 0:
-        return redirect("cart:homepage")
+        return redirect("cart:detail")
     form = OrderShippingForm(data=request.POST)
+    print(f"=== form {form} ===")
+    print(f"=== form {form.is_valid()} ===")
     if form.is_valid():
         try:
-            cd = form.cleaned_data()
+            cd = form.cleaned_data
             order = Order.objects.create(
                 payment=cd["payment"],
                 firstname=cd["firstname"],
