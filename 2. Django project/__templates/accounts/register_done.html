@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+    <section class="rounded bg-light p-3">
+        <h1>Welcome {{ new_user.first_name }}</h1>
+        <p>
+            Your account has been succesfully created.
+            Now you can <a href="{% url 'accounts:login' %}">Log in</a>
+            .
+        </p>
+    </section>
+{% endblock %}
