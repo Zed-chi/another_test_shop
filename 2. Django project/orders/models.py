@@ -9,6 +9,7 @@ class Order(models.Model):
     STATUSES = (
         ("draft", "draft"),
         ("paid", "paid"),
+        ("need_approval", "need_approval"),  # оплата наличными
         ("shipped", "shipped"),
         ("delivered", "delivered"),
         ("refunding", "refunding"),
@@ -38,10 +39,16 @@ class Order(models.Model):
         verbose_name="Статус заказа", max_length=255, choices=STATUSES, default="draft"
     )
     total_price = models.DecimalField(
-        verbose_name="Общая сумма", decimal_places=2, max_digits=10
+        verbose_name="Общая сумма",
+        decimal_places=2,
+        max_digits=10,
+        null=True,
+        blank=True,
     )
     shipping_price = models.DecimalField(
-        verbose_name="Сумма доставки", decimal_places=2, max_digits=10
+        verbose_name="Сумма доставки",
+        decimal_places=2,
+        max_digits=10,
     )
     delivered_at = models.DateTimeField(
         verbose_name="Дата доставки", null=True, blank=True
@@ -59,6 +66,9 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    def get_full_price(self):
+        return sum([item.total_price() for item in self.items]) + self.shipping_price
 
 
 class OrderItem(models.Model):
