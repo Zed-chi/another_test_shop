@@ -18,7 +18,12 @@
                     <tbody>
                         {% for item in cart.items.all %}
                             <tr>
-                                <td>{{ item.product.title }}</td>
+                                <td>
+                                    <a href="{% url 'product_detail' slug=item.product.slug %}">
+                                    {{ item.product.title }}        
+                                    </a>
+                                
+                                </td>
                                 <td>{{ item.price }}</td>
                                 <td>
                                     <form style="display: inline"
@@ -45,11 +50,18 @@
                     </tbody>
                 </table>
             </div>
-            <h4>Общая сумма корзины: {{ cart.get_total_price }}руб</h4>
-            <form action="{% url 'cart:flush_cart' %}">
+            <h4>
+                Общая сумма корзины: {{ cart.get_total_price }}руб                
+            </h4>
+            <form action="{% url 'orders:preorder' %}" method="post" class="m-1">
+                    {% csrf_token %}
+                    <button class="btn btn-success" type="submit">Оформить заказ</button>
+                </form>
+            <form action="{% url 'cart:flush_cart' %}" method="post" class="m-1">
                 {% csrf_token %}
-                <button type="submit">Очистить</button>
+                <button class="btn btn-warning" type="submit">Очистить</button>
             </form>
+
         {% else %}
             <h4>Пусто</h4>
         {% endif %}
