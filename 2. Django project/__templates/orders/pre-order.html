@@ -3,7 +3,7 @@
 {% block content %}
     <section class="rounded bg-light  p-3 m-1" style="min-height:500px">
         <h4>Информация для отправки заказа</h4>
-        <form action="{% url 'orders:checkout' %}" method="post">
+        <form action="{% url 'orders:complete' %}" method="post">
             {% csrf_token %}            
             {{form.as_p}}
             <button class="btn btn-success" type="submit">Оформить</button>
