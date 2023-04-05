@@ -1,0 +1,12 @@
+{% extends "base.html"  %}
+{% block title %}users{% endblock %}
+{% block content %}
+    <div class="card">
+        <div class="card-header">Вход на сайт</div>
+        <div class="card-body">Вы вышли из учетной записи</div>
+        <div class="card-footer">
+            <a href="{% url 'accounts:register' %}">Зарегистрироваться</a>
+            <a href="{% url 'accounts:password_reset' %}">Забыли пароль?</a>
+        </div>
+    </div>
+{% endblock %}
