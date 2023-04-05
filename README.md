@@ -8,7 +8,28 @@
 
 ### 2. Джанго проект
 
-1. для token-based регистрации нужно отправить POST запрос на `/auth/users/` json формата:
+## Для запуска создать в директории джанго проекта файл `.env` и заполнить:
+```
+SECRET=...
+STATIC_ROOT=...(например .)
+STATIC_DIR=... (например "__static")
+MEDIA_DIR=... (например "__media")
+DEBUG=... (True/False)
+```
+
+### Для локальной установки:
+1) установить зависимости (глобально или в виртуальном окружении):`pip install -r requirements.txt`
+2) Провести первоначальную миграцию `python manage.py migrate`
+3) Создать суперпользователя `python manage.py createsuperuser`
+4) Запустить на тестовом сервере `python manage.py runserver` либо на uvicorn/gunicorn/hypercorn/uwsgi
+
+### Для докер запуска:
+1) Зайти в контейнер,
+2) В папке приложения `python manage.py createsuperuser`
+
+
+#### Для token-based регистрации нужно
+- отправить POST запрос на `/auth/users/` json формата:
 ```json
 {	
 	"name":"...",
@@ -16,7 +37,7 @@
 	"password":"..."
 }
 ```
-После этого получаем в ответ json:
+- После этого получаем в ответ json:
 ```json
 {
 	"name": "...",
@@ -25,7 +46,8 @@
 }
 ```
 
-2. Для token-based входа отправить POST запрос на `/auth/token/login/` json формата:
+#### Для token-based входа 
+- отправить POST запрос на `/auth/token/login/` json формата:
 ```json
 {	
 	"email":"...",
@@ -33,15 +55,16 @@
 }
 ```
 
-После этого получаем в ответ json:
+- После этого получаем в ответ json:
 ```json
 {
 	"auth_token": "fafcd0850707e93e930dbca087bce495d84501ca"
 }
 ```
 
-Далее для операций требующих авторизации добавляем заголовок
+- Далее для операций требующих авторизации добавляем заголовок
 `Authorization: Token ...`
 
 
-3. Для token-based выхода отправить POST запрос на  `/auth/token/logout/` c заголовком авторизации
+#### Для token-based выхода 
+- отправить POST запрос на  `/auth/token/logout/` c заголовком авторизации
