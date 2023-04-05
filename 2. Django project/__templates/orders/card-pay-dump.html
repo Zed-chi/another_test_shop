@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Магазин - Оплата {% endblock %}
+{% block content %}
+    <section class="rounded bg-light  p-3 m-1" style="min-height:500px">
+        <h4>Платежный шлюз</h4>
+        <form action="{% url 'orders:dump_gate' pk=pk %}" method="post">
+            {% csrf_token %}            
+            <button class="btn btn-success" type="submit">Оплатить</button>
+        </form>
+    </section>
+{% endblock %}
+{% block scripts %}{% endblock %}
