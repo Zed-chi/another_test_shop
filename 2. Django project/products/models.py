@@ -2,7 +2,9 @@ from django.db import models
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=255, unique=True, verbose_name="Название")
+    title = models.CharField(
+        max_length=255, unique=True, verbose_name="Название"
+    )
     slug = models.SlugField(unique=True)
     parent = models.ForeignKey(
         "Category",
@@ -33,15 +35,24 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    title = models.CharField(max_length=255, verbose_name="Название", unique=True)
+    title = models.CharField(
+        max_length=255, verbose_name="Название", unique=True
+    )
     category_path = models.TextField(verbose_name="Входит в категории")
     slug = models.SlugField(unique=True)
     description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
+    price = models.DecimalField(
+        max_digits=10, decimal_places=2, verbose_name="Цена"
+    )
     available = models.BooleanField(default=False, verbose_name="В наличии")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата добавления")
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Дата добавления"
+    )
     preview_image = models.ImageField(
-        upload_to="previews", blank=True, null=True, verbose_name="Фото для превью"
+        upload_to="previews",
+        blank=True,
+        null=True,
+        verbose_name="Фото для превью",
     )
 
     def __str__(self):
@@ -55,9 +66,14 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="images", verbose_name="Продукт"
+        Product,
+        on_delete=models.CASCADE,
+        related_name="images",
+        verbose_name="Продукт",
     )
-    image = models.ImageField(upload_to="product-images/", verbose_name="Изображение")
+    image = models.ImageField(
+        upload_to="product-images/", verbose_name="Изображение"
+    )
 
     class Meta:
         verbose_name = "Связь с изображением"
@@ -72,7 +88,10 @@ class CategoryProductRel(models.Model):
         verbose_name="Категория",
     )
     product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="items", verbose_name="Продукт"
+        Product,
+        on_delete=models.CASCADE,
+        related_name="items",
+        verbose_name="Продукт",
     )
 
     class Meta:

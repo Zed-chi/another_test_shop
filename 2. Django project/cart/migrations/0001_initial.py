@@ -10,7 +10,10 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("products", "0004_alter_category_image_alter_product_preview_image_and_more"),
+        (
+            "products",
+            "0004_alter_category_image_alter_product_preview_image_and_more",
+        ),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -49,11 +52,15 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("quantity", models.IntegerField()),
-                ("item_price", models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "item_price",
+                    models.DecimalField(decimal_places=2, max_digits=10),
+                ),
                 (
                     "cart",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="cart.cart"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="cart.cart",
                     ),
                 ),
                 (

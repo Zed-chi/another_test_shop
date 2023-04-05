@@ -25,7 +25,9 @@ class ProductAdmin(admin.ModelAdmin):
         - updating relations
         """
         super().save_model(request, obj, form, change)
-        category_relations = CategoryProductRel.objects.filter(product_id=obj.id)
+        category_relations = CategoryProductRel.objects.filter(
+            product_id=obj.id
+        )
         relations_ids = [i.category.id for i in category_relations]
         posted_ids = [int(i) for i in obj.category_path.split(" ")]
         for rel in category_relations:
@@ -34,7 +36,9 @@ class ProductAdmin(admin.ModelAdmin):
         for _id in posted_ids:
             if _id not in relations_ids:
                 category = Category.objects.get(id=_id)
-                CategoryProductRel.objects.create(product=obj, category=category)
+                CategoryProductRel.objects.create(
+                    product=obj, category=category
+                )
 
 
 @admin.register(Category)

@@ -20,7 +20,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="product",
             name="splash_image",
-            field=models.ImageField(blank=True, null=True, upload_to="products"),
+            field=models.ImageField(
+                blank=True, null=True, upload_to="products"
+            ),
         ),
         migrations.AddField(
             model_name="product",

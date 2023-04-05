@@ -26,7 +26,10 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("password", models.CharField(max_length=128, verbose_name="password")),
+                (
+                    "password",
+                    models.CharField(max_length=128, verbose_name="password"),
+                ),
                 (
                     "last_login",
                     models.DateTimeField(
@@ -85,7 +88,10 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("date_of_birth", models.DateField(blank=True, null=True)),
-                ("photo", models.ImageField(blank=True, upload_to="users/%Y/%m/%d/")),
+                (
+                    "photo",
+                    models.ImageField(blank=True, upload_to="users/%Y/%m/%d/"),
+                ),
                 (
                     "user",
                     models.OneToOneField(

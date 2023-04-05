@@ -27,11 +27,15 @@ class Order(models.Model):
     phonenumber = PhoneNumberField("Номер телефона", max_length=32)
     comment = models.TextField("Комментарий к заказу", blank=True, default="")
     address = models.TextField("Адрес доставки")
-    user = model.ForeignKey("Пользователь", settings.AUTH_USER_MODEL, on_delete)
+    user = model.ForeignKey(
+        "Пользователь", settings.AUTH_USER_MODEL, on_delete
+    )
     status = models.CharField(
         "Статус заказа", max_length=255, choices=STATUSES, default="draft"
     )
-    total_price = models.DecimalField("Общая сумма", decimal_places=2, max_digits=10)
+    total_price = models.DecimalField(
+        "Общая сумма", decimal_places=2, max_digits=10
+    )
     shipping_price = models.DecimalField(
         "Сумма доставки", decimal_places=2, max_digits=10
     )
@@ -52,10 +56,15 @@ class OrderItem(models.Model):
         "Заказ", Order, on_delete=models.CASCADE, related_name="items"
     )
     product = models.ForeignKey(
-        "Продукт", Product, on_delete=models.CASCADE, related_name="order_items"
+        "Продукт",
+        Product,
+        on_delete=models.CASCADE,
+        related_name="order_items",
     )
     quantity = models.IntegerField("Количество", default=1)
-    item_price = models.DecimalField("Сумма заказа", decimal_places=2, max_digits=10)
+    item_price = models.DecimalField(
+        "Сумма заказа", decimal_places=2, max_digits=10
+    )
 
     class Meta:
         unique_together = ["order", "product"]
