@@ -2,9 +2,7 @@ from django.db import models
 
 
 class Category(models.Model):
-    title = models.CharField(
-        max_length=255, unique=True, verbose_name="Название"
-    )
+    title = models.CharField(max_length=255, unique=True, verbose_name="Название")
     slug = models.SlugField(unique=True)
     parent = models.ForeignKey(
         "Category",
@@ -35,9 +33,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    title = models.CharField(
-        max_length=255, verbose_name="Название", unique=True
-    )
+    title = models.CharField(max_length=255, verbose_name="Название", unique=True)
     category_path = models.TextField(verbose_name="Входит в категории")
     slug = models.SlugField(unique=True)
     description = models.TextField()
@@ -71,20 +67,11 @@ class ProductImage(models.Model):
     image = models.ImageField(upload_to="product")
 
 
-class ProductThumb(models.Model):
-    product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="thumb"
-    )
-    image = models.ImageField(upload_to="product")
-
-
 class CategoryProductRel(models.Model):
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="items"
     )
-    product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="items"
-    )
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="items")
 
     class Meta:
         verbose_name = "Связь Продукт-Категория"
