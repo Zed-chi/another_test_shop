@@ -1,0 +1,28 @@
+{% extends "base.html"  %}
+
+{% block title %}
+Профиль
+{% endblock %}
+
+{% block content %}
+	{{request.user}}
+	<hr>
+	{{request.user.groups.all}}
+
+	
+	{% if request.user.is_cook %}
+	is_cook
+	{% endif %}
+
+	{% if request.user.is_waiter %}
+	is_waiter
+	{% endif %}
+
+	{% if request.user.is_admin %}
+	is_admin
+	{% endif %}
+
+	<hr>
+	{{request.user.group_set}}
+	<a href="/users/password_change/">Сменить пароль</a>
+{% endblock %}
