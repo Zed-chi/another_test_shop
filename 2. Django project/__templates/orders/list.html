@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Магазин - Список ваших заказов{% endblock %}
+{% block content %}
+    <section class="rounded bg-light  p-3 m-1" style="min-height:500px">
+        <h4>Список заказов:</h4>
+        {% if not orders.count %}
+            <p>У вас пока нет заказов.</p>
+            
+        {% endif %}
+        {% for order in orders %}
+            <a href="{% url 'order_detail' pk=order.id %}"
+               style="display:inline"
+            >
+            </a>
+        {% endfor %}
+    </section>
+{% endblock %}
+{% block scripts %}{% endblock %}
