@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from environs import Env
+
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = (
-    "django-insecure-w2)b*z&--e^sw=j(pi*b&3g@0dxb36g=b4w=q+eheux4l0&8p="
-)
+SECRET_KEY = env.str("SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG")
 
 AUTH_USER_MODEL = "accounts.UserProfile"
 ALLOWED_HOSTS = ["*"]
@@ -41,11 +43,15 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.forms",
+    # apps
     "main",
     "products",
-    "rest_framework",
     "cart",
     "accounts",
+    # third-party-plugins
+    "rest_framework",
+    "rest_framework.authtoken",
+    "djoser",
 ]
 
 MIDDLEWARE = [
@@ -63,7 +69,7 @@ ROOT_URLCONF = "shop.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "__templates"],
+        "DIRS": [BASE_DIR / env.str("TEMPLATES_DIR", "__templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -129,13 +135,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT = ""
-STATICFILES_DIRS = [BASE_DIR / "__static"]
+STATIC_ROOT = env.str("STATIC_ROOT", "")
+STATICFILES_DIRS = [BASE_DIR / env.str("STATIC_DIR", "__static")]
 MEDIA_URL = "media/"
-MEDIA_ROOT = "__media"
+MEDIA_ROOT = env.str("MEDIA_ROOT", "__media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CATEGORIES_URL = "/api/categories"
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+}
