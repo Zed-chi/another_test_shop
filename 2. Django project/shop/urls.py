@@ -6,6 +6,8 @@ from django.urls import include, path
 urlpatterns = [
     path("cart", include("cart.urls")),
     path("accounts/", include("accounts.urls")),
+    path("auth/", include("djoser.urls")),
+    path("auth/", include("djoser.urls.authtoken")),
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
     path("", include("products.urls")),
@@ -13,6 +15,4 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
-    )
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
