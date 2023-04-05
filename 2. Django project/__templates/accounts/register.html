@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Создать учетную запись{% endblock %}
+{% block content %}
+    <section class="bg-light rounded p-3">
+        <h1>Создать учетную запись</h1>
+        <form action="." method="POST">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            <button type="submit">Создать</button>
+        </form>
+    </section>
+{% endblock %}
