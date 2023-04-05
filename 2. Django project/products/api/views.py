@@ -1,6 +1,8 @@
 from rest_framework import generics
-from .serializers import CategorySerializer
+
 from products.models import Category
+
+from .serializers import CategorySerializer
 
 
 class CategoryListView(generics.ListCreateAPIView):

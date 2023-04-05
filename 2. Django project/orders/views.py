@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+
 # Create your views here.
 def checkout(req):
     cart_id = req.POST.get("cart_id", None)

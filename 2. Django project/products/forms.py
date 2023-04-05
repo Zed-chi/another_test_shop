@@ -1,5 +1,7 @@
 from django import forms
+
 from products.form_widgets import CategoryListWidget
+
 from .models import Product
 
 

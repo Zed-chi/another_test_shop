@@ -1,7 +1,9 @@
-from django.forms.widgets import Widget
-from .models import Category
 import json
+
 from django.conf import settings
+from django.forms.widgets import Widget
+
+from .models import Category
 
 
 class CategoryListWidget(Widget):
