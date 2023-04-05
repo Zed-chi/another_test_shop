@@ -19,8 +19,8 @@
                     <div class="card  p-0">
                         <div class="card-header">{{ product.title }}</div>
                         <div class="card-body">
-                            {% if product.image %}
-                                <img src="{{ product.image.file.url }}" alt="" class="w-100">
+                            {% if product.preview_image %}
+                                <img src="{{ product.preview_image.url }}" alt="" class="w-100">
                             {% else %}
                                 <img src="/media/blank.png" alt="" class="w-100">
                             {% endif %}
