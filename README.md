@@ -58,7 +58,7 @@ DEBUG=... (True/False)
 - После этого получаем в ответ json:
 ```json
 {
-	"auth_token": "fafcd0850707e93e930dbca087bce495d84501ca"
+	"auth_token": "..."
 }
 ```
 
