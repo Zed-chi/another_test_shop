@@ -6,3 +6,4 @@
 *.pyc
 .vscode
 2. Django project/__media/category/*
+2. Django project/__media/products/*
