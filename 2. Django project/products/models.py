@@ -41,12 +41,7 @@ class Product(models.Model):
     available = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     preview_image = models.ImageField(
-        upload_to="products",
-        blank=True,
-        null=True,
-    )
-    thumb_image = models.ImageField(
-        upload_to="products",
+        upload_to="previews",
         blank=True,
         null=True,
     )
@@ -64,7 +59,7 @@ class ProductImage(models.Model):
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="images"
     )
-    image = models.ImageField(upload_to="product")
+    image = models.ImageField(upload_to="product-images/")
 
 
 class CategoryProductRel(models.Model):
