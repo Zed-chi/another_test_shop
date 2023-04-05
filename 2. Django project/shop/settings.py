@@ -27,6 +27,7 @@ SECRET_KEY = (
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+AUTH_USER_MODEL = "accounts.UserProfile"
 ALLOWED_HOSTS = ["*"]
 
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     "products",
     "rest_framework",
     "cart",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -106,7 +108,10 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "accounts.authentication.EmailAuthBackend",
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
