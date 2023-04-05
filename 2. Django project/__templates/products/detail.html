@@ -11,6 +11,13 @@
                 {% else %}
                     <img src="/media/blank.png" alt="" class="w-100">
                 {% endif %}
+                <div class="row p-3">
+                    {% for image_file in product.images.all %}
+                        <div class="border" style="width:100px;">
+                            <img src="{{image_file.image.url}}" alt="" class="w-100">
+                        </div>
+                    {% endfor %}
+                </div>                
             </div>
             <!- info -->
             <div class="col-sm-12 col-md-6">
