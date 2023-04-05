@@ -23,9 +23,7 @@ class Cart(models.Model):
 
 
 class CartItem(models.Model):
-    cart = models.ForeignKey(
-        Cart, on_delete=models.CASCADE, related_name="items"
-    )
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="cart_items"
     )
@@ -36,4 +34,4 @@ class CartItem(models.Model):
         unique_together = ["cart", "product"]
 
     def total_price(self):
-        return self.item_price * self.quantity
+        return self.product.price * self.quantity
