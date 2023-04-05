@@ -6,7 +6,10 @@ from products.models import Product
 
 class Cart(models.Model):
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="cart"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="cart",
+        verbose_name="Пользователь",
     )
 
     def flush(self):
@@ -23,12 +26,20 @@ class Cart(models.Model):
 
 
 class CartItem(models.Model):
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")
-    product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="cart_items"
+    cart = models.ForeignKey(
+        Cart,
+        on_delete=models.CASCADE,
+        related_name="items",
+        verbose_name="Корзина",
     )
-    quantity = models.IntegerField(default=1)
-    item_price = models.DecimalField(decimal_places=2, max_digits=10)
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name="cart_items",
+        verbose_name="Продукт",
+    )
+    quantity = models.IntegerField("Количество", default=1)
+    item_price = models.DecimalField("Цена позиции", decimal_places=2, max_digits=10)
 
     class Meta:
         unique_together = ["cart", "product"]
