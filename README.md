@@ -7,3 +7,41 @@
 Запуск `python task.py -n <число>`
 
 ### 2. Джанго проект
+
+1. для token-based регистрации нужно отправить POST запрос на `/auth/users/` json формата:
+```json
+{	
+	"name":"...",
+	"email":"...",
+	"password":"..."
+}
+```
+После этого получаем в ответ json:
+```json
+{
+	"name": "...",
+	"email": "...",
+	"id": ...
+}
+```
+
+2. Для token-based входа отправить POST запрос на `/auth/token/login/` json формата:
+```json
+{	
+	"email":"...",
+	"password":"..."
+}
+```
+
+После этого получаем в ответ json:
+```json
+{
+	"auth_token": "fafcd0850707e93e930dbca087bce495d84501ca"
+}
+```
+
+Далее для операций требующих авторизации добавляем заголовок
+`Authorization: Token ...`
+
+
+3. Для token-based выхода отправить POST запрос на  `/auth/token/logout/` c заголовком авторизации
