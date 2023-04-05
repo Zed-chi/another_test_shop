@@ -1,59 +1,82 @@
 {% extends 'base.html' %}
 {% block title %}Магазин - Продукт {{ product.title }}{% endblock %}
+
 {% block content %}
-    <section class="rounded bg-light p-3 m-1" style="min-height:700px">
-        <h2>{{ product.title }}</h2>
-        <div class="row">
-            <!- image -->
-            <div class="col-sm-12 col-md-6">
+<section class="rounded bg-light p-3 m-1" style="min-height:700px">
+    <h2>{{ product.title }}</h2>
+    <div class="row">
+        <!- image -->
+        <div class="col-sm-12 col-md-6">
+            {% if product.preview_image %}
+            <img class="current-image w-100" src="{{ product.preview_image.url }}" alt="">
+            {% else %}
+            <img src="/media/blank.png" alt="" class="w-100">
+            {% endif %}
+            <div class="row p-3">
                 {% if product.preview_image %}
-                    <img src="{{ product.preview_image.url }}" alt="" class="w-100">
-                {% else %}
-                    <img src="/media/blank.png" alt="" class="w-100">
-                {% endif %}
-                <div class="row p-3">
-                    {% for image_file in product.images.all %}
-                        <div class="border" style="width:100px;">
-                            <img src="{{image_file.image.url}}" alt="" class="w-100">
-                        </div>
-                    {% endfor %}
+                <div class="border image-icon" style="width:100px;">
+                    <img 
+                        src="{{ product.preview_image.url }}"
+                        alt="" class="w-100"
+                    >
                 </div>                
-            </div>
-            <!- info -->
-            <div class="col-sm-12 col-md-6">
-                <ul class="list-group">
-                    <li class="list-group-item">Описание: {{ product.description }}</li>
-                    <li class="list-group-item">
-                        В наличии:
-                        {% if product.available %}
-                            <i class="fa fa-check"></i>
-                        {% else %}
-                            <i class="fa fa-close"></i>
-                        {% endif %}
-                    </li>
-                    <li class="list-group-item">Цена: {{ product.price }}</li>
-                    <li class="list-group-item">
-                        В категории:
-                        {% for relation in product.items.all %}
-                            <a href="{% url 'category_detail' slug=relation.category.slug %}"
-                               class="badge bg-secondary">
-                                {{ relation.category.title }}
-                            </a>
-                        {% endfor %}
-                    </li>
-                    <li class="list-group-item">
-                        {% if request.user.is_authenticated %}
-                            <form action="{% url 'cart:add_product' slug=product.slug %}" method="post">
-                                {% csrf_token %}
-                                <button class="btn btn-success">Добавить в корзину</button>
-                            </form>
-                        {% else %}
-                            <a href="/login" class="btn btn-info">Войти в учетную запись</a>
-                        {% endif %}
-                    </li>
-                </ul>
+                {% endif %}
+                {% for image_file in product.images.all %}
+                <div class="border image-icon" style="width:100px;">
+                    <img src="{{image_file.image.url}}" alt="" class="w-100">
+                </div>
+                {% endfor %}
             </div>
         </div>
-    </section>
+        <!- info -->
+        <div class="col-sm-12 col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item">Описание: {{ product.description }}</li>
+                <li class="list-group-item">
+                    В наличии:
+                    {% if product.available %}
+                    <i class="fa fa-check"></i>
+                    {% else %}
+                    <i class="fa fa-close"></i>
+                    {% endif %}
+                </li>
+                <li class="list-group-item">Цена: {{ product.price }}</li>
+                <li class="list-group-item">
+                    В категории:
+                    {% for relation in product.items.all %}
+                    <a href="{% url 'category_detail' slug=relation.category.slug %}" class="badge bg-secondary">
+                        {{ relation.category.title }}
+                    </a>
+                    {% endfor %}
+                </li>
+                <li class="list-group-item">
+                    {% if request.user.is_authenticated %}
+                    <form action="{% url 'cart:add_product' slug=product.slug %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-success">Добавить в корзину</button>
+                    </form>
+                    {% else %}
+                    <a href="/login" class="btn btn-info">Войти в учетную запись</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
 {% endblock %}
-{% block scripts %}{% endblock %}
+{% block scripts %}
+<script>
+window.onload = function() {
+    var currentImage = document.querySelector(".current-image");
+    var icons = document.querySelectorAll(".image-icon");
+    icons.forEach((icon) => {
+        icon.addEventListener("click", function(e) {
+            var icon = e.currentTarget;
+            var innerImage = icon.querySelector("img");
+            var innerSrc = innerImage.getAttribute("src");
+            currentImage.setAttribute("src", innerSrc);
+        })
+    })
+}
+</script>
+{% endblock %}
