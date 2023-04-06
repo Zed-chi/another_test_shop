@@ -1,6 +1,9 @@
 from django.conf import settings
-from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
-                                        PermissionsMixin)
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 from django.db import models
 
 from cart.models import Cart
@@ -48,13 +51,19 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.email}"
 
+    class Meta:
+        verbose_name = "Учетная запись"
+        verbose_name_plural = "Учетные записи"
 
-class Profile(models.Model):
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
-    )
+
+class ProfileInfo(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date_of_birth = models.DateField(blank=True, null=True)
     photo = models.ImageField(upload_to="users/%Y/%m/%d/", blank=True)
 
     def __str__(self):
         return f"Profile for {self.user.name}"
+
+    class Meta:
+        verbose_name = "Доп. информация"
+        verbose_name_plural = "Доп. информация"
