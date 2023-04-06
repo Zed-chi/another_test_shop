@@ -27,3 +27,20 @@ footer {
 }
 
 
+main article .info-block .card-body{
+  background: url('https://www.w3schools.com/w3images/pizza.jpg') center center;
+  height: 300px;
+  display: flex;
+  justify-content:space-around;
+  align-content: center;
+}
+
+main article .info-block .card-body div{    
+  display: flex;  
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: center;
+  font-size: 48px;
+ color: white;
+ text-shadow: 0 0 5px black;
+}
