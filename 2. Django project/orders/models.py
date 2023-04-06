@@ -66,7 +66,7 @@ class Order(models.Model):
         verbose_name_plural = "заказы"
 
     def __str__(self):
-        return str(self.id)
+        return f"Заказ # {(self.id)}"
 
     def get_full_price(self):
         items = self.items.all()
