@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render, reverse
 
 from .forms import OrderShippingForm
 from .models import Order, OrderItem
+from django.db.transaction import atomic
 
 SHIPPING_PRICE = 100
 
@@ -16,36 +17,37 @@ def complete(request):
         return redirect("cart:detail")
     form = OrderShippingForm(data=request.POST)
     if form.is_valid():
-        try:
-            cd = form.cleaned_data
-            order = Order.objects.create(
-                payment=cd["payment"],
-                firstname=cd["firstname"],
-                lastname=cd["lastname"],
-                phonenumber=cd["phonenumber"],
-                comment=cd["comment"],
-                address=cd["address"],
-                user=request.user,
-                status="draft",
-                shipping_price=SHIPPING_PRICE,
-            )
-            for cart_item in request.user.cart.items.all():
-                OrderItem.objects.create(
-                    order=order,
-                    product=cart_item.product,
-                    quantity=cart_item.quantity,
-                    item_price=cart_item.product.price,
+        with atomic():
+            try:
+                cd = form.cleaned_data
+                order = Order.objects.create(
+                    payment=cd["payment"],
+                    firstname=cd["firstname"],
+                    lastname=cd["lastname"],
+                    phonenumber=cd["phonenumber"],
+                    comment=cd["comment"],
+                    address=cd["address"],
+                    user=request.user,
+                    status="draft",
+                    shipping_price=SHIPPING_PRICE,
                 )
-            order.total_price = order.get_full_price()
-            if cd["payment"] == "CASH":
-                order.status = "need_approval"
-            order.save()
-            request.user.cart.flush()
-            messages.success(request, "Order created")
-            return redirect(reverse("orders:detail", kwargs={"pk": order.id}))
-        except Exception as e:
-            raise Exception(e)
-            messages.error(request, e)
+                for cart_item in request.user.cart.items.all():
+                    OrderItem.objects.create(
+                        order=order,
+                        product=cart_item.product,
+                        quantity=cart_item.quantity,
+                        item_price=cart_item.product.price,
+                    )
+                order.total_price = order.get_full_price()
+                if cd["payment"] == "CASH":
+                    order.status = "need_approval"
+                order.save()
+                request.user.cart.flush()
+                messages.success(request, "Order created")
+                return redirect(reverse("orders:detail", kwargs={"pk": order.id}))
+            except Exception as e:
+                raise Exception(e)
+                messages.error(request, e)
     else:
         messages.error(request, "invalid form.")
     return redirect("cart:detail")
