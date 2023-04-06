@@ -2,21 +2,8 @@
 {% block title %}Магазин - Категории{% endblock %}
 {% block content %}
     <section class="rounded bg-light row p-3 m-1">
-        {% for cat in categories %}
-            <a href="{% url 'category_detail' slug=cat.slug %}"
-               style="display:inline"
-               class="col-sm-12 col-md-4">
-                <div class="card p-0 mt-1">
-                    <div class="card-header">{{ cat.title }}</div>
-                    <div class="card-body text-center">
-                        {% if cat.image %}
-                            <img src="{{ cat.image.url }}" alt="Картинка" height="150">
-                        {% else %}
-                            <img src="/media/blank.png" alt="Картинка" height="150">
-                        {% endif %}
-                    </div>
-                </div>
-            </a>
+        {% for category in categories %}
+            {% include 'products/categories/category-tile.html' %}
         {% endfor %}
     </section>
 {% endblock %}

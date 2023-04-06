@@ -1,0 +1,11 @@
+<a href="{% url 'category_detail' slug=category.slug %}" style="display:inline" class="col-sm-12 col-md-4 mb-3 category-link">
+	<div class="category-tile rounded" style='background: url({% if category.image %}{{ category.image.url }}{% else %}"/media/blank.png"{% endif %});background-position: center center;
+    background-size: cover;'>
+		{{ category.title }}
+	</div>
+	
+    
+
+        
+    
+</a>
