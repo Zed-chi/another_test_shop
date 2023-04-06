@@ -1,7 +1,6 @@
-django==4
-environs
-djoser
-djangorestframework
-django-configurations
-django-registration
-pillow
+Django==4.1
+environs==9.4.0
+djoser==2.1.0
+djangorestframework==3.14.0
+Pillow==9.4.0
+uvicorn==0.20
