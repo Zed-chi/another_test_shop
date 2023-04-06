@@ -1,4 +1,4 @@
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import DetailView, ListView
 
 from .models import Category, Product
@@ -36,7 +36,12 @@ class CategoryDetailView(DetailView):
             page_num = self.request.GET["page"]
         else:
             page_num = 1
-        page = paginator.get_page(page_num)
+        try:
+            page = paginator.get_page(page_num)
+        except PageNotAnInteger:
+            page = paginator.get_page(1)
+        except EmptyPage:
+            page = paginator.get_page(paginator.num_pages)
         context["page"] = page
         context["products"] = page.object_list
         return context
