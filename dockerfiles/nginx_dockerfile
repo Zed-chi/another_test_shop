@@ -1,0 +1,5 @@
+FROM nginx:1.20
+WORKDIR /etc/nginx/
+COPY ./cfg/nginx.conf /etc/nginx/nginx.conf
+COPY ./cfg/site.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80

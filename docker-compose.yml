@@ -1,0 +1,36 @@
+version: "2.1"
+
+services:
+  web:    
+    container_name: django_app
+    env_file:
+      - "./2.\ Django project/.env"
+    build:
+      context: .
+      dockerfile: ./dockerfiles/app_dockerfile
+    networks:
+      - my_network
+    volumes:
+      - "./2.\ Django project:/usr/src/app"
+      - sqlite:/usr/src/app/__db
+    command: uvicorn shop.asgi:application --reload --host 0.0.0.0 --port 8000    
+ 
+  nginx:
+    build: 
+      context: .
+      dockerfile: ./dockerfiles/nginx_dockerfile
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - "./2.\ Django project/__static:/static"
+      - "./2.\ Django project/__media:/media"
+    depends_on:
+      - web
+    restart: always  
+    networks:
+      - my_network
+volumes:
+  sqlite:
+networks:
+  my_network:
