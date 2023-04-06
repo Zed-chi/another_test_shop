@@ -8,3 +8,5 @@ admin.site.register(ProfileInfo)
 @admin.register(UserProfile)
 class UserAdmin(admin.ModelAdmin):
     list_display = ["name", "email", "id"]
+    search_fields = ["name", "email"]
+    ordering = ["email"]
