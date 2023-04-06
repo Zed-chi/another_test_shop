@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.db import models
-
 from products.models import Product
 
 
@@ -46,7 +45,9 @@ class CartItem(models.Model):
         verbose_name="Продукт",
     )
     quantity = models.IntegerField("Количество", default=1)
-    item_price = models.DecimalField("Цена позиции", decimal_places=2, max_digits=10)
+    item_price = models.DecimalField(
+        "Цена позиции", decimal_places=2, max_digits=10
+    )
 
     class Meta:
         unique_together = ["cart", "product"]

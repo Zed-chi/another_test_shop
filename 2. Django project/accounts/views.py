@@ -1,9 +1,8 @@
+from cart.models import Cart
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-
-from cart.models import Cart
 
 from .forms import LoginForm, UserRegistrationForm
 from .models import UserProfile

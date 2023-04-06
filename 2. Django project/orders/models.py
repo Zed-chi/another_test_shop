@@ -1,7 +1,6 @@
+from cart.models import Cart
 from django.conf import settings
 from django.db import models
-
-from cart.models import Cart
 from products.models import Product
 
 
@@ -27,16 +26,23 @@ class Order(models.Model):
     )
     firstname = models.CharField(verbose_name="Имя", max_length=30)
     lastname = models.CharField(verbose_name="Фамилия", max_length=50)
-    phonenumber = models.CharField(verbose_name="Номер телефона", max_length=32)
+    phonenumber = models.CharField(
+        verbose_name="Номер телефона", max_length=32
+    )
     comment = models.TextField(
         verbose_name="Комментарий к заказу", blank=True, default=""
     )
     address = models.TextField(verbose_name="Адрес доставки")
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        verbose_name="Пользователь",
     )
     status = models.CharField(
-        verbose_name="Статус заказа", max_length=255, choices=STATUSES, default="draft"
+        verbose_name="Статус заказа",
+        max_length=255,
+        choices=STATUSES,
+        default="draft",
     )
     total_price = models.DecimalField(
         verbose_name="Общая сумма",
@@ -50,7 +56,9 @@ class Order(models.Model):
         decimal_places=2,
         max_digits=10,
     )
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Дата создания"
+    )
     delivered_at = models.DateTimeField(
         verbose_name="Дата доставки", null=True, blank=True
     )
@@ -76,7 +84,10 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(
-        Order, on_delete=models.CASCADE, related_name="items", verbose_name="Заказ"
+        Order,
+        on_delete=models.CASCADE,
+        related_name="items",
+        verbose_name="Заказ",
     )
     product = models.ForeignKey(
         Product,

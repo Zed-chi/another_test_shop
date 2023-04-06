@@ -1,15 +1,10 @@
-from django.shortcuts import (
-    render,
-    redirect,
-    reverse,
-    get_list_or_404,
-    get_object_or_404,
-)
-from django.contrib.auth.decorators import login_required, permission_required
-from .models import Order, OrderItem
-from .forms import OrderShippingForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
+from django.shortcuts import (get_list_or_404, get_object_or_404, redirect,
+                              render, reverse)
 
+from .forms import OrderShippingForm
+from .models import Order, OrderItem
 
 SHIPPING_PRICE = 100
 
