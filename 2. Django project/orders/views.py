@@ -15,8 +15,6 @@ def complete(request):
     if request.user.cart.get_total_price == 0:
         return redirect("cart:detail")
     form = OrderShippingForm(data=request.POST)
-    print(f"=== form {form} ===")
-    print(f"=== form {form.is_valid()} ===")
     if form.is_valid():
         try:
             cd = form.cleaned_data
