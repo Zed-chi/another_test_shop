@@ -1,61 +1,84 @@
 {% extends 'base.html' %}
 {% block title %}Магазин - Главная{% endblock %}
 {% block content %}
-    <div id="demo"
-         class="carousel slide bg-light rounded p-3 text-dark"
-         data-bs-ride="carousel">
-        <!-- Indicators/dots -->
-        <div class="carousel-indicators">
-            <button type="button"
-                    data-bs-target="#demo"
-                    data-bs-slide-to="0"
-                    class="active"></button>
-            <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-            <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+<article class="mt-0">
+    <div class="card info-block">
+        <div class="card-header">Информация</div>
+        <div class="card-body">                
+                <div>Магазин</div>
         </div>
-        <!-- The slideshow/carousel -->
-        <div class="carousel-inner"  style="height: 200px">
-            <div class="carousel-item active text-center h-100">
-                <img src="https://www.w3schools.com/w3images/popsicle.jpg"
-                     alt="Los Angeles"
-                     class="d-block h-100" 
-                     style="margin: 0 auto;" 
-                >
-            </div>
-            <div class="carousel-item h-100">
-                <img src="https://www.w3schools.com/w3images/salmon.jpg"
-                     alt="Chicago"
-                     class="d-block h-100"
-                     style="margin: 0 auto;" 
-                >
-            </div>
-            <div class="carousel-item h-100">
-                <img src="https://www.w3schools.com/w3images/cherries.jpg"
-                     alt="New York"
-                     class="d-block h-100"
-                     style="margin: 0 auto;" 
-                >
+    </div>
+</article>
+
+<article class="mt-3">
+    <div class="card">
+        <div class="card-header">Новинки</div>
+        <div class="card-body">
+            <div id="demo" class="carousel slide bg-light rounded p-3 text-dark" data-bs-ride="carousel">
+                <!-- Indicators/dots -->
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                </div>
+                <!-- The slideshow/carousel -->
+                <div class="carousel-inner" style="height: 200px">
+                    <div class="carousel-item active text-center h-100">
+                        <img src="https://www.w3schools.com/w3images/popsicle.jpg" alt="Los Angeles" class="d-block h-100" style="margin: 0 auto;">
+                    </div>
+                    <div class="carousel-item h-100">
+                        <img src="https://www.w3schools.com/w3images/salmon.jpg" alt="Chicago" class="d-block h-100" style="margin: 0 auto;">
+                    </div>
+                    <div class="carousel-item h-100">
+                        <img src="https://www.w3schools.com/w3images/cherries.jpg" alt="New York" class="d-block h-100" style="margin: 0 auto;">
+                    </div>
+                </div>
+                <!-- Left and right controls/icons -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
             </div>
         </div>
-        <!-- Left and right controls/icons -->
-        <button class="carousel-control-prev"
-                type="button"
-                data-bs-target="#demo"
-                data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next"
-                type="button"
-                data-bs-target="#demo"
-                data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </button>
     </div>
-    <div class="mt-4 p-3 bg-light text-dark rounded">
-        <h1>Рекомендации</h1>
-        <img src="https://www.w3schools.com/w3images/pizza.jpg"
-             alt=""
-             width="100%">
+</article>
+
+<article class="mt-3">
+    <div class="card">
+        <div class="card-header">Топ-продаж</div>
+        <div class="card-body">
+            <div id="demo" class="carousel slide bg-light rounded p-3 text-dark" data-bs-ride="carousel">
+                <!-- Indicators/dots -->
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                </div>
+                <!-- The slideshow/carousel -->
+                <div class="carousel-inner" style="height: 200px">
+                    <div class="carousel-item active text-center h-100">
+                        <img src="https://www.w3schools.com/w3images/popsicle.jpg" alt="Los Angeles" class="d-block h-100" style="margin: 0 auto;">
+                    </div>
+                    <div class="carousel-item h-100">
+                        <img src="https://www.w3schools.com/w3images/salmon.jpg" alt="Chicago" class="d-block h-100" style="margin: 0 auto;">
+                    </div>
+                    <div class="carousel-item h-100">
+                        <img src="https://www.w3schools.com/w3images/cherries.jpg" alt="New York" class="d-block h-100" style="margin: 0 auto;">
+                    </div>
+                </div>
+                <!-- Left and right controls/icons -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
     </div>
+</article>
+
 {% endblock %}
 {% block scripts %}{% endblock %}
