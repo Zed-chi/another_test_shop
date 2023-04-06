@@ -40,9 +40,9 @@
                             <a class="nav-link" href="{% url 'categories_list' %}">Каталог</a>
                         </li>
                         <li class="nav-item">
-                            <form class="d-flex">
-                                <input class="form-control me-2" type="text" placeholder="Название">
-                                <button class="btn btn-primary" type="button">Поиск</button>
+                            <form class="d-flex" action="{% url 'search:list' %}" method="get">
+                                <input class="form-control me-2" type="text" placeholder="Название" name="query">
+                                <button class="btn btn-primary" type="submit">Поиск</button>
                             </form>
                         </li>
                     </ul>
