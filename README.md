@@ -24,8 +24,9 @@ DEBUG=... (True/False)
 4) Запустить на тестовом сервере `python manage.py runserver` либо на uvicorn/gunicorn/hypercorn/uwsgi
 
 ### Для докер запуска:
-1) Зайти в контейнер,
-2) В папке приложения `python manage.py createsuperuser`
+1) запустить `docker-compose up`
+2) Зайти в контейнер приложения,
+3) В папке приложения `python manage.py createsuperuser`
 
 
 #### Для token-based регистрации нужно
