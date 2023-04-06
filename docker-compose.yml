@@ -3,6 +3,7 @@ version: "2.1"
 services:
   web:    
     container_name: django_app
+    image: shop_app
     env_file:
       - "./2.\ Django project/.env"
     build:
@@ -14,7 +15,11 @@ services:
       - "./2.\ Django project:/usr/src/app"
       - sqlite:/usr/src/app/__db
     command: uvicorn shop.asgi:application --reload --host 0.0.0.0 --port 8000    
- 
+  
+  migration:
+    image: shop_app
+    command: "python manage.py migrate"
+      
   nginx:
     build: 
       context: .
