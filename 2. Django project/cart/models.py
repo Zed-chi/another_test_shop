@@ -12,12 +12,9 @@ class Cart(models.Model):
     )
 
     def flush(self):
-        try:
-            items = self.items.all()
-            for i in items:
-                i.delete()
-        except:
-            pass
+        items = self.items.all()
+        for i in items:
+            i.delete()
 
     def get_total_price(self):
         items = self.items.all()
@@ -51,13 +48,11 @@ class CartItem(models.Model):
 
     class Meta:
         unique_together = ["cart", "product"]
+        verbose_name = "Продукт в корзине"
+        verbose_name_plural = "Продукты в корзине"
 
     def total_price(self):
         return self.product.price * self.quantity
-
-    class Meta:
-        verbose_name = "Продукт в корзине"
-        verbose_name_plural = "Продукты в корзине"
 
     def __str__(self):
         return f"{self.cart.id} - {self.product.title}"

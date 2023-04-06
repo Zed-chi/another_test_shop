@@ -1,8 +1,7 @@
-from django.core.paginator import Page, Paginator
-from django.shortcuts import render
+from django.core.paginator import Paginator
 from django.views.generic import DetailView, ListView
 
-from .models import Category, CategoryProductRel, Product
+from .models import Category, Product
 
 
 class ProductListView(ListView):

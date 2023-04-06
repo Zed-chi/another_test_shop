@@ -1,4 +1,3 @@
-from cart.models import Cart
 from django.conf import settings
 from django.db import models
 from products.models import Product
