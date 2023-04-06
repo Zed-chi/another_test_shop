@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "cart",
     "accounts",
     "orders",
+    "search",
     # third-party-plugins
     "rest_framework",
     "rest_framework.authtoken",
