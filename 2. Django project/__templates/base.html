@@ -71,14 +71,16 @@
                             </a>
                             <ul class="dropdown-menu  dropdown-menu-end">
                                 <li>
-                                    <a class="dropdown-item" href="{% url 'orders:list'%}">Заказы</a>
+                                    <a class="dropdown-item" href="{% url 'orders:list' %}">Заказы</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="">Профиль</a>
+                                    <a class="dropdown-item" href="{% url 'accounts:detail' %}">Профиль</a>
                                 </li>
+                                {% if request.user.is_staff %}
                                 <li>
                                     <a class="dropdown-item" href="/admin">Админка</a>
                                 </li>
+                                {% endif %}
                                 <li>
                                     <a class="dropdown-item" href="{% url 'accounts:logout' %}">Выйти</a>
                                 </li>
