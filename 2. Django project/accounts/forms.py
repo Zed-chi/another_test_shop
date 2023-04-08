@@ -36,22 +36,26 @@ class LoginForm(forms.Form):
         fields = ["email", "password"]
 
 
-class ProfileForm(forms.Form):
+class ProfileForm(forms.ModelForm):
     firstname = forms.CharField(
         label="Имя",
         widget=forms.TextInput(attrs={"class": "form-control"}),
+        required=False,
     )
     lastname = forms.CharField(
         label="Фамилия",
         widget=forms.TextInput(attrs={"class": "form-control"}),
+        required=False,
     )
     phonenumber = forms.CharField(
         label="Контактный номер телефона",
         widget=forms.TextInput(attrs={"class": "form-control"}),
+        required=False,
     )
     address = forms.CharField(
         label="Адрес доставки",
         widget=forms.Textarea(attrs={"class": "form-control"}),
+        required=False,
     )
 
     class Meta:
