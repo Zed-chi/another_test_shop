@@ -8,25 +8,21 @@
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">    
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">    
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
     <link rel="manifest" href="{% static 'site.webmanifest' %}">
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery-3.1.0.js' %}"></script>
     <script src="{% static 'js/jquery-ui.js' %}"></script>
     <script src="{% static 'js/knockout-3.3.0.js' %}"></script>
-   
 </head>
 
 <body>
@@ -40,9 +36,21 @@
                 </button>
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav  me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'categories_list' %}">Каталог</a>
-                        </li>
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                Каталог
+                            </button>
+                            <ul class="dropdown-menu">                            
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'categories_list' %}">Все категории</a>
+                                </li>
+                                {% for category in categories %}
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'category_detail' slug=category.slug %}">{{category.title}}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                         <li class="nav-item">
                             <form class="d-flex" action="{% url 'search:list' %}" method="get">
                                 <input class="form-control me-2" type="text" placeholder="Название" name="query">
@@ -86,23 +94,18 @@
             </div>
         </nav>
     </header>
-
     <!-- messages -->
     <section class="container">
-            {% if messages %}    
+        {% if messages %}
         {% for message in messages %}
-            <div {% if message.tags %} class="{{ message.tags }} alert alert-success alert-dismissible" {% endif %}>
-                <button type="button" class="btn-close" data-bs-dismiss="alert">                    
-                </button>                
-                {{ message }}
-            </div>
-        {% endfor %}    
-    {% endif %}
+        <div {% if message.tags %} class="{{ message.tags }} alert alert-success alert-dismissible" {% endif %}>
+            <button type="button" class="btn-close" data-bs-dismiss="alert">
+            </button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
     </section>
-
-
-
-
     <!-- content -->
     <main class="container">
         {% block content %}{% endblock %}
@@ -124,6 +127,9 @@
             </div>
         </div>
     </footer>
+    <form action="http://127.0.0.1:8000/orders">
+        <button type="submit">qwe</button>
+    </form>
     <script></script>
     {% block scripts %}{% endblock %}
 </body>
