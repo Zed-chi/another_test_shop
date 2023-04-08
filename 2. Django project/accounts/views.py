@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render, reverse
 
 from .forms import LoginForm, UserRegistrationForm, ProfileForm
 from .models import UserProfile, ProfileInfo
+from django.contrib import messages
 
 
 def register(req):
@@ -40,12 +41,26 @@ def user_login(request):
 
 @login_required
 def user_detail(request):
-    form = ProfileForm()
+    info = request.user.info
     if request.method == "GET":
-        form = ProfileForm()
+        form = ProfileForm(
+            initial={
+                "firstname": info.firstname,
+                "lastname": info.lastname,
+                "phonenumber": info.phonenumber,
+                "address": info.address,
+            }
+        )
         return render(request, "accounts/detail.html", {"form": form})
-    form = ProfileForm(date=request.POST)
+    form = ProfileForm(request.POST)
     if not form.is_valid():
-        form.save()
-
+        messages.warning(request, form.errors)
+    else:
+        cd = form.cleaned_data
+        info.firstname = cd["firstname"]
+        info.lastname = cd["lastname"]
+        info.phonenumber = cd["phonenumber"]
+        info.address = cd["address"]
+        info.save()
+        messages.info(request, "Изменения сохранены")
     return redirect(reverse("accounts:detail"))
