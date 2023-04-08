@@ -25,9 +25,7 @@ class Order(models.Model):
     )
     firstname = models.CharField(verbose_name="Имя", max_length=30)
     lastname = models.CharField(verbose_name="Фамилия", max_length=50)
-    phonenumber = models.CharField(
-        verbose_name="Номер телефона", max_length=32
-    )
+    phonenumber = models.CharField(verbose_name="Номер телефона", max_length=32)
     comment = models.TextField(
         verbose_name="Комментарий к заказу", blank=True, default=""
     )
@@ -55,9 +53,7 @@ class Order(models.Model):
         decimal_places=2,
         max_digits=10,
     )
-    created_at = models.DateTimeField(
-        auto_now_add=True, verbose_name="Дата создания"
-    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     delivered_at = models.DateTimeField(
         verbose_name="Дата доставки", null=True, blank=True
     )
@@ -67,6 +63,7 @@ class Order(models.Model):
     handled_at = models.DateTimeField(
         verbose_name="Дата обработки", null=True, blank=True
     )
+    transaction_id = models.CharField(max_length=255, null=True, blank=True)
 
     class Meta:
         verbose_name = "заказ"
