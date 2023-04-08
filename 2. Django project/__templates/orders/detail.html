@@ -24,8 +24,11 @@
         <li class="list-group-item">Дата обработки: {{order.handled_at}}</li>
         {% endif %}
         {% if order.status == "draft" %}
-        <form action="{% url 'orders:card_pay' pk=order.id %}" method="post">
+        <form action="{{pay_gate_host}}" method="post">
             {% csrf_token %}
+            <input type="hidden" name="token" value="{{token}}">            
+            <input type="hidden" name="order_id" value="{{order.id}}">
+            <input type="hidden" name="pay_sum" value="{{order.get_full_price}}">            
             <button type="submit">Оплатить</button>
         </form>
         {% endif %}

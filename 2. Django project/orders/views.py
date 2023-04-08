@@ -5,6 +5,9 @@ from django.shortcuts import get_object_or_404, redirect, render, reverse
 from .forms import OrderShippingForm
 from .models import Order, OrderItem
 from django.db.transaction import atomic
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+
 
 SHIPPING_PRICE = 100
 
@@ -93,10 +96,34 @@ def dump_gate(request, pk):
 @login_required
 def order_detail(request, pk):
     order = get_object_or_404(Order, pk=pk, user=request.user)
-    return render(request, "orders/detail.html", {"order": order})
+    return render(
+        request,
+        "orders/detail.html",
+        {
+            "order": order,
+            "token": settings.DUMP_PAY_GATE_TOKEN,
+            "pay_gate_host": settings.DUMP_PAY_GATE_URL,
+        },
+    )
 
 
 @login_required
 def orders_list(request):
     orders = Order.objects.filter(user=request.user)
     return render(request, "orders/list.html", {"orders": orders})
+
+
+@csrf_exempt
+def success_pay(request):
+    if request.method == "GET":
+        return redirect("/")
+    transaction_id = request.POST["transaction_id"]
+    order_id = request.POST["order_id"]
+    result = request.POST["result"]
+    if result == "success":
+        order = get_object_or_404(Order, pk=order_id)
+        order.transaction_id = transaction_id
+        order.status = "paid"
+        order.save()
+        messages.info(request, f"Оплата заказа {order_id} проведена")
+    return redirect("/")
