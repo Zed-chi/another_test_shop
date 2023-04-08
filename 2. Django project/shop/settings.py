@@ -158,3 +158,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
     ),
 }
+
+
+DUMP_PAY_GATE_URL = ""
+DUMP_PAY_GATE_TOKEN = ""
