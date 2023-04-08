@@ -160,5 +160,5 @@ REST_FRAMEWORK = {
 }
 
 
-DUMP_PAY_GATE_URL = ""
-DUMP_PAY_GATE_TOKEN = ""
+DUMP_PAY_GATE_URL = "https://dumppaygate.zedchi.repl.co/orders/"
+DUMP_PAY_GATE_TOKEN = "4d4383d5-d619-11ed-9bb0-1d59432186ed"
