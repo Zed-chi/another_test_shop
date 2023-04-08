@@ -59,7 +59,15 @@ def preorder(request):
         return redirect("cart:homepage")
     if request.user.cart.get_total_price == 0:
         return redirect("cart:homepage")
-    form = OrderShippingForm()
+    info = request.user.info
+    form = OrderShippingForm(
+        initial={
+            "firstname": info.firstname,
+            "lastname": info.lastname,
+            "phonenumber": info.phonenumber,
+            "address": info.address,
+        }
+    )
     return render(request, "orders/pre-order.html", {"form": form})
 
 
