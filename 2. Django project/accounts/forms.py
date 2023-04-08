@@ -1,7 +1,5 @@
 from django import forms
-
-# from django.contrib.auth.forms import UserCreationForm
-from .models import UserProfile
+from .models import UserProfile, ProfileInfo
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -36,3 +34,31 @@ class LoginForm(forms.Form):
     class Meta:
         model = UserProfile
         fields = ["email", "password"]
+
+
+class ProfileForm(forms.Form):
+    firstname = forms.CharField(
+        label="Имя",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+    )
+    lastname = forms.CharField(
+        label="Фамилия",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+    )
+    phonenumber = forms.CharField(
+        label="Контактный номер телефона",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+    )
+    address = forms.CharField(
+        label="Адрес доставки",
+        widget=forms.Textarea(attrs={"class": "form-control"}),
+    )
+
+    class Meta:
+        model = ProfileInfo
+        fields = [
+            "firstname",
+            "lastname",
+            "phonenumber",
+            "address",
+        ]
