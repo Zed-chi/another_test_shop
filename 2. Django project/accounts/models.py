@@ -1,7 +1,10 @@
 from cart.models import Cart
 from django.conf import settings
-from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
-                                        PermissionsMixin)
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 from django.db import models
 
 
@@ -14,6 +17,7 @@ class UserProfileManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         Cart.objects.create(user=user)
+        ProfileInfo.objects.create(user=user)
         return user
 
     def create_superuser(self, email, name, password):
@@ -54,10 +58,12 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
 class ProfileInfo(models.Model):
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="info"
     )
-    date_of_birth = models.DateField(blank=True, null=True)
-    photo = models.ImageField(upload_to="users/%Y/%m/%d/", blank=True)
+    firstname = models.CharField(max_length=255, null=True, blank=True)
+    lastname = models.CharField(max_length=255, null=True, blank=True)
+    phonenumber = models.CharField(max_length=255, null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return f"Profile for {self.user.name}"
